@@ -12,9 +12,12 @@ services:
       args:
         BUILD: ${BUILD:?BUILD required environment}
         JENKINS_HOSTNAME: ${JENKINS_HOSTNAME:?JENKINS_HOSTNAME required environment}
+        JENKINS_PORT: ${JENKINS_PORT:?JENKINS_PORT required environment}
+        JENKINS_ADMIN_USERNAME: ${JENKINS_ADMIN_USERNAME:?JENKINS_ADMIN_USERNAME required environment}
+        JENKINS_ADMIN_PASSWORD: ${JENKINS_ADMIN_PASSWORD:?JENKINS_ADMIN_PASSWORD required environment}
     volumes:
-      - /var/run/docker.sock:/var/run/docker-ssd.pid
+      - /var/run/docker.sock:/var/run/docker.sock
     env_file:
       - .env
     ports:
-      - 8080:8080
+      - 8080:${JENKINS_PORT}

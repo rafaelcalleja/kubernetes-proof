@@ -2,6 +2,9 @@
   become: yes
   vars:
     jenkins_hostname: '{{ JENKINS_HOSTNAME }}'
+    jenkins_http_port: '{{ JENKINS_PORT }}'
+    jenkins_admin_username: '{{ JENKINS_ADMIN_USERNAME }}'
+    jenkins_admin_password: '{{ JENKINS_ADMIN_PASSWORD }}'
     java_packages:
       - openjdk-8-jdk
     docker_users:

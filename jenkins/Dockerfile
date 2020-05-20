@@ -29,6 +29,9 @@ RUN ansible-galaxy install geerlingguy.jenkins && \
 COPY playbook.yaml /
 
 ARG JENKINS_HOSTNAME
+ARG JENKINS_PORT
+ARG JENKINS_ADMIN_USERNAME
+ARG JENKINS_ADMIN_PASSWORD
 
 RUN mkdir -p -- ~/lib && \
     cp /lib/x86_64-linux-gnu/libnss_files.so.2 ~/lib && \
@@ -38,7 +41,7 @@ RUN mkdir -p -- ~/lib && \
 
 ENV LD_LIBRARY_PATH=/root/lib
 
-RUN ansible-playbook -e JENKINS_HOSTNAME=${JENKINS_HOSTNAME} /playbook.yaml
+RUN ansible-playbook -e "JENKINS_HOSTNAME=${JENKINS_HOSTNAME} JENKINS_PORT=${JENKINS_PORT} JENKINS_ADMIN_USERNAME=${JENKINS_ADMIN_USERNAME} JENKINS_ADMIN_PASSWORD=${JENKINS_ADMIN_PASSWORD}" /playbook.yaml
 
 ENV DEBIAN_FRONTEND=
 ENV LD_LIBRARY_PATH=
