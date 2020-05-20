@@ -17,6 +17,7 @@ services:
         JENKINS_ADMIN_PASSWORD: ${JENKINS_ADMIN_PASSWORD:?JENKINS_ADMIN_PASSWORD required environment}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      - ${HOME}/.kube/config:/home/jenkins/.kube/
     env_file:
       - .env
     ports:
