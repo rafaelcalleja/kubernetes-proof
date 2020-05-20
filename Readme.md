@@ -8,6 +8,8 @@ ansible-galaxy install geerlingguy.docker
 
 ##### playbook.yaml
 
+https://github.com/geerlingguy/ansible-role-jenkins
+
 ```yaml
 - hosts: localhost
   become: yes

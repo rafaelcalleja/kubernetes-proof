@@ -1,0 +1,11 @@
+- hosts: localhost
+  become: yes
+  vars:
+    jenkins_hostname: '{{ JENKINS_HOSTNAME }}'
+    java_packages:
+      - openjdk-8-jdk
+    docker_users:
+      - jenkins
+  roles:
+    - role: geerlingguy.java
+    - role: geerlingguy.jenkins

@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  jenkins:
+    privileged: true
+    image: dokify/homologation-jenkins:${BUILD}
+    hostname: ${JENKINS_HOSTNAME}
+    init: true
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        BUILD: ${BUILD:?BUILD required environment}
+        JENKINS_HOSTNAME: ${JENKINS_HOSTNAME:?JENKINS_HOSTNAME required environment}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker-ssd.pid
+    env_file:
+      - .env
+    ports:
+      - 8080:8080
