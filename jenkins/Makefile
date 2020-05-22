@@ -3,4 +3,4 @@ default: all
 all: image
 
 image:
-	 docker-compose build
+	 env DOCKER_GID=$$(stat -c '%g' $${DOCKER_SOCKET:-/var/run/docker.sock}) docker-compose build

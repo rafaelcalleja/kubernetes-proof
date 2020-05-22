@@ -3,17 +3,29 @@ version: '3.7'
 services:
   jenkins:
     privileged: true
-    image: dokify/homologation-jenkins:${BUILD}
+    image: dokify/jenkins:${BUILD}
     hostname: ${JENKINS_HOSTNAME}
     build:
       context: .
       dockerfile: ./Dockerfile
       args:
         JENKINS_PORT: ${JENKINS_PORT:?JENKINS_PORT required environment}
+        DOCKER_GID: ${DOCKER_GID:?DOCKER_GID docker group gid required build environment}
     volumes:
+      - type: volume
+        source: jenkins_home
+        target: /var/jenkins_home
+        consistency: delegated
       - /var/run/docker.sock:/var/run/docker.sock
-      - ${HOME}/.kube/config:/home/jenkins/.kube/
+      - ${HOME}/.kube:/var/jenkins_home/.kube
+      - ${HOME}/.minikube:${HOME}/.minikube
+    environment:
+      JENKINS_HOST_HOME: jenkins_home
     env_file:
       - .env
     ports:
       - 8080:${JENKINS_PORT}
+      - 50000:50000
+volumes:
+  jenkins_home:
+

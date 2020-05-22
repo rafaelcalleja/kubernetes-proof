@@ -107,4 +107,15 @@ RUN /usr/local/bin/install-plugins.sh \
     locale
 #ENV JENKINS_OPTS --httpPort=-1 --httpsPort=${JENKINS_PORT} --httpsCertificate=/var/lib/jenkins/cert --httpsPrivateKey=/var/lib/jenkins/pk
 
+ARG DOCKER_GID
+
+RUN addgroup --system --gid ${DOCKER_GID} real-docker && \
+    addgroup jenkins real-docker
+
+RUN python3 -m pip install --upgrade pip cffi && \
+    pip install ansible && \
+    pip3 install docker-py && \
+    pip install mitogen ansible-lint && \
+    pip install --upgrade pywinrm
+
 USER jenkins
