@@ -31,6 +31,8 @@ nodes:
   - containerPort: 443
     hostPort: 443
     protocol: TCP
+  - containerPort: 30080
+    hostPort: 7070
 - role: worker
 - role: worker
 EOF
@@ -113,3 +115,11 @@ EOF
 kubectl expose replicaset echo --type=LoadBalancer
 
 kubectl get svc echo
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.0.0/aio/deploy/recommended.yaml
+
+kubectl apply -f ./dashboard.yaml
+
+kubectl create serviceaccount dashboard-admin-sa
+kubectl create clusterrolebinding dashboard-admin-sa --clusterrole=cluster-admin --serviceaccount=default:dashboard-admin-sa
+kubectl describe secret $(kubectl get secrets|grep admin|awk '{print $1}')

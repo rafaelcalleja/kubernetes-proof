@@ -1,0 +1,33 @@
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: kubernetes-dashboard
+  name: kubernetes-dashboard-nodeport
+  namespace: kubernetes-dashboard
+spec:
+  type: NodePort
+  ports:
+    - port: 443
+      targetPort: 8443
+      nodePort: 30080
+  selector:
+    k8s-app: kubernetes-dashboard
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: dashboard-ingress
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /dashboard
+            backend:
+              serviceName: kubernetes-dashboard
+              servicePort: 443
+          - path: /dashboard-metrics
+            backend:
+              serviceName: dashboard-metrics-scraper
+              servicePort: 8000
