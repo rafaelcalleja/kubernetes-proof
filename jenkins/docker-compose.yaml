@@ -18,7 +18,6 @@ services:
         consistency: delegated
       - /var/run/docker.sock:/var/run/docker.sock
       - ${HOME}/.kube:/var/jenkins_home/.kube
-      - ${HOME}/.minikube:${HOME}/.minikube
     environment:
       JENKINS_HOST_HOME: jenkins_home
     env_file:
@@ -26,6 +25,14 @@ services:
     ports:
       - 8080:${JENKINS_PORT}
       - 50000:50000
+    networks:
+      kind:
+      default:
 volumes:
   jenkins_home:
+
+networks:
+  kind:
+    external:
+      name: kind
 

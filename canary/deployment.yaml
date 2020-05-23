@@ -1,0 +1,41 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: kubeapp-canary-prod
+  labels:
+    role: app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      role: app
+  template:
+    metadata:
+      labels:
+        role: app
+    spec:
+      containers:
+        - name: kubeapp
+          image: rafaelcalleja/dummy-app:1.0
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+          command: ["/app"]
+          ports:
+            - name: kubeapp
+              containerPort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: app-lb
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector:
+    app: kubeapp-canary-prod

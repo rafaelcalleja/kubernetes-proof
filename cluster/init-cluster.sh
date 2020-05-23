@@ -2,7 +2,7 @@
 
 source ../bash/require-command.bash
 
-commands=("docker" "docker-compose" "bash" "grep" "kubectl" "kind" "curl")
+commands=("docker" "docker-compose" "bash" "grep" "kubectl" "kind" "curl" "openssl")
 requireCommand "${commands[@]}"
 
 cat <<EOF | kind create cluster --config=-
@@ -66,3 +66,48 @@ if ! curl -s localhost/bar|grep bar > /dev/null; then
     echo "Installing ingress controller failed"
     exit 1
 fi
+
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/namespace.yaml
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.9.3/manifests/metallb.yaml
+kubectl create secret generic -n metallb-system memberlist --from-literal=secretkey="$(openssl rand -base64 128)"
+
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: metallb-system
+  name: config
+data:
+  config: |
+    address-pools:
+    - name: default
+      protocol: layer2
+      addresses:
+      - 172.21.255.1-172.21.255.250
+EOF
+
+cat <<EOF | kubectl apply -f -
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: echo
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: echo
+  template:
+    metadata:
+      labels:
+        app: echo
+    spec:
+      containers:
+      - name: echo
+        image: inanimate/echo-server
+        ports:
+        - containerPort: 8080
+EOF
+
+kubectl expose replicaset echo --type=LoadBalancer
+
+kubectl get svc echo
