@@ -21,9 +21,6 @@ more info: https://kind.sigs.k8s.io/docs/user/quick-start/
 ### delete cluster
 kind delete cluster
 
-### configurando
-kind create cluster --config kind-example-config.yaml
-
 ### get logs
 kind export logs
 
