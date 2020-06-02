@@ -11,6 +11,7 @@ master:
     - google-storage-plugin:latest
     - docker-workflow:latest
     - docker-java-api:latest
+    - blueocean:latest
   resources:
     requests:
       cpu: "50m"
@@ -19,12 +20,7 @@ master:
       cpu: "1"
       memory: "3500Mi"
   javaOpts: "-Xms3500m -Xmx3500m"
-  serviceType: LoadBalancer
-  ingress:
-    enabled: true
-    apiVersion: networking.k8s.io/v1beta1
-    annotations:
-      kubernetes.io/ingress.class: nginx
+  serviceType: ClusterIP
 agent:
   resources:
     requests:
