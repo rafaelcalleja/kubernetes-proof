@@ -6,5 +6,5 @@ install-helm:
 install-jenkins:
 	@./install-jenkins.sh
 
-install-jenkins:
+connect-jenkins:
 	@./connect-jenkins.sh
