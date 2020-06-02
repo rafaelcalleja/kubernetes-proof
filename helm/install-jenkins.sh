@@ -22,5 +22,5 @@ echo http://$SERVICE_IP:8080/login
 
 ### Secrets necesarias para los agentes que hacen deploys
 #https://support.cloudbees.com/hc/en-us/articles/360031575171-How-to-add-global-configuration-to-Kubernetes-Agents
-docker login
-kubectl create secret generic my-docker-config --from-file=.dockerconfigjson=${HOME}/.docker/config.json --type=kubernetes.io/dockerconfigjson
+#docker login
+#kubectl create secret generic my-docker-config --from-file=.dockerconfigjson=${HOME}/.docker/config.json --type=kubernetes.io/dockerconfigjson
