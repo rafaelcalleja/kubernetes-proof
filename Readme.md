@@ -22,4 +22,8 @@ https://github.com/geerlingguy/ansible-role-jenkins
     - role: geerlingguy.docker
 ```
 
+https://cloud.google.com/solutions/continuous-delivery-jenkins-kubernetes-engine?hl=es-419
+https://cloud.google.com/solutions/jenkins-on-kubernetes-engine-tutorial?hl=es-419
+https://developer.ibm.com/tutorials/use-jenkins-and-istio-for-canary-deployment/
+https://blog.csanchez.org/2019/03/05/progressive-delivery-with-jenkins-x-automatic-canary-deployments/
 
