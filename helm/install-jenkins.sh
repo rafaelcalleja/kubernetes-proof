@@ -28,3 +28,7 @@ kubectl --namespace default port-forward $POD_NAME 8080:8080
 #https://support.cloudbees.com/hc/en-us/articles/360031575171-How-to-add-global-configuration-to-Kubernetes-Agents
 #docker login
 #kubectl create secret generic my-docker-config --from-file=.dockerconfigjson=${HOME}/.docker/config.json --type=kubernetes.io/dockerconfigjson
+
+## Force upgrade from loadBalancer to ClusterIP
+##kubectl get service/cd-jenkins -oyaml|sed 's/LoadBalancer/ClusterIP/g'|kubectl replace --force  -f -
+##helm upgrade cd-jenkins stable/jenkins -f jenkins/values.yaml
