@@ -1,8 +1,10 @@
 default: install-helm
 
 install-helm:
-	 @./install-helm.sh
+	@./install-helm.sh
 
 install-jenkins:
-	 @./install-jenkins.sh
+	@./install-jenkins.sh
 
+install-jenkins:
+	@./connect-jenkins.sh
