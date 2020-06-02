@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sampleapp
+  labels:
+    app: sampleapp
+    version: prod
+spec:
+  selector:
+    matchLabels:
+      app: sampleapp
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sampleapp
+        version: prod
+    spec:
+      containers:
+        - name: sampleapp
+          image: rafaelcalleja/sampleapp:v1
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sampleapp
+  labels:
+    app: sampleapp
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8080
+      name: http
+  selector:
+    app: sampleapp

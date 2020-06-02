@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sampleapp-canary
+  labels:
+    app: sampleapp
+    version: canary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sampleapp
+  template:
+    metadata:
+      labels:
+        app: sampleapp
+        version: canary
+    spec:
+      containers:
+        - name: sampleapp
+          image: rafaelcalleja/sampleapp:canary
+          imagePullPolicy: Always
