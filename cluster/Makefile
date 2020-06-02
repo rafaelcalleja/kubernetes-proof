@@ -1,6 +1,6 @@
 default: all
 
-all: init-cluster init-load-balancer init-dashboard init-ingress
+all: init-cluster init-ingress init-load-balancer init-dashboard
 
 install:
 	 @cat Readme.md
