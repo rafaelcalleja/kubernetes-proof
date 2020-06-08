@@ -12,6 +12,7 @@ master:
     - docker-workflow:latest
     - docker-java-api:latest
     - blueocean:latest
+    - configuration-as-code:latest
   resources:
     requests:
       cpu: "50m"
