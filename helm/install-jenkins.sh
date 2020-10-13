@@ -5,10 +5,17 @@ source ../bash/require-command.bash
 commands=("helm")
 requireCommand "${commands[@]}"
 
-helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+## Google
+##Crear la IP statica para asignarsela al LoadBalancer de Jenkins
+##gcloud compute addresses create jenkins-static-ip --region=europe-west4
+
+helm repo add jenkins https://charts.jenkins.io
 helm repo update
-#kubectl create namespace cd
-helm install cd-jenkins stable/jenkins -f jenkins/values.yaml --wait
+
+## Google
+## kubectl -n default apply -f jenkins/ingress.yaml
+
+helm install cd-jenkins jenkins/jenkins -f jenkins/values.yaml --wait
 
 ### password
 printf $(kubectl get secret --namespace default cd-jenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
