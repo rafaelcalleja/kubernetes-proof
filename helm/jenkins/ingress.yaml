@@ -5,7 +5,7 @@ metadata:
   labels:
     helm.sh/chart: jenkins-2.12.1
   annotations:
-    kubernetes.io/ingress.global-static-ip-name: "jenkins-static-ip"
+    kubernetes.io/ingress.global-static-ip-name: "jenkins-static-ip" #gcloud compute addresses create jenkins-static-ip --global
 spec:
   rules:
     - host: jenkins.dokify.net
