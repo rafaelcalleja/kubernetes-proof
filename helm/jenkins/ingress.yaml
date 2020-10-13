@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: jenkins-ingress
+  labels:
+    helm.sh/chart: jenkins-2.12.1
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: "jenkins-static-ip"
+spec:
+  rules:
+    - host: jenkins.dokify.net
+      http:
+        paths:
+          - path: "/(.*)"
+            backend:
+              serviceName: cd-jenkins
+              servicePort: 8080
