@@ -20,6 +20,7 @@ helm repo update
 ## helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
 ## helm repo add stable https://kubernetes-charts.storage.googleapis.com/
 ## helm repo update
+## helm install ingress-nginx ingress-nginx/ingress-nginx
 ## kubectl apply -f jenkins/ingress-nginx-controller.yaml
 
 helm install cd-jenkins jenkins/jenkins -f jenkins/values.yaml --wait
