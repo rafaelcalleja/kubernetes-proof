@@ -5,15 +5,22 @@ source ../bash/require-command.bash
 commands=("helm")
 requireCommand "${commands[@]}"
 
-## Google
-##Crear la IP statica para asignarsela al LoadBalancer de Jenkins
+## Google & GCE Controller
+##Crear la IP estática para asignarsela al LoadBalancer de Jenkins
 ##gcloud compute addresses create jenkins-static-ip --region=europe-west4
+##kubectl apply -f jenkins/ingress-gce-controller.yaml
 
 helm repo add jenkins https://charts.jenkins.io
 helm repo update
 
 ## Google
 ## kubectl -n default apply -f jenkins/ingress.yaml
+
+## Nginx Controller
+## helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+## helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+## helm repo update
+## kubectl apply -f jenkins/ingress-nginx-controller.yaml
 
 helm install cd-jenkins jenkins/jenkins -f jenkins/values.yaml --wait
 
