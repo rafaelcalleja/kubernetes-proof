@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: jenkins-ingress
   labels:
-    helm.sh/chart: jenkins-2.12.1
+    app.kubernetes.io/instance: cd-jenkins
   annotations:
     kubernetes.io/ingress.global-static-ip-name: "jenkins-static-ip" #gcloud compute addresses create jenkins-static-ip --global
 spec:
@@ -11,7 +11,7 @@ spec:
     - host: jenkins.dokify.net
       http:
         paths:
-          - path: "/(.*)"
+          - path: "/*"
             backend:
               serviceName: cd-jenkins
               servicePort: 8080
