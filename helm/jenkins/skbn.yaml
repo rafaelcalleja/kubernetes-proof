@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    app: skbn
+  name: skbn
+spec:
+  template:
+    metadata:
+      labels:
+        app: skbn
+    spec:
+      restartPolicy: OnFailure
+      serviceAccountName: skbn
+      containers:
+      - name: skbn
+        image: maorfr/skbn
+        command: ["skbn"]
+        args:
+        - cp
+        - --src
+        - s3://dokify-tmp-files-test/jenkins-backup/20201016140505
+        - --dst
+        - k8s://cd-jenkins/pod/cd-jenkins-66db789c99-mj8wk/cd-jenkins/var/jenkins_home
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: AWS_REGION
+          value: eu-west-1
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: jenkinsaws
+              key: jenkins_aws_access_key
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: jenkinsaws
+              key: jenkins_aws_secret_key
