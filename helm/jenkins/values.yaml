@@ -34,3 +34,28 @@ persistence:
   size: 100Gi
 serviceAccount:
   name: cd-jenkins
+backup:
+  enabled: true
+  componentName: "jenkins-backup"
+  schedule: "*/5 * * * *"
+  image:
+    repository: "maorfr/kube-tasks"
+    tag: "0.2.0"
+  existingSecret:
+    jenkinsaws:
+      awsaccesskey: jenkins_aws_access_key
+      awssecretkey: jenkins_aws_secret_key
+  env:
+    - name: "AWS_REGION"
+      value: "eu-west-1"
+  resources:
+    requests:
+      memory: 1Gi
+      cpu: 1
+    limits:
+      memory: 1Gi
+      cpu: 1
+  destination: "s3://dokify-tmp-files-test/jenkins-backup"
+rbac:
+  create: true
+  readSecrets: true
