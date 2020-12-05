@@ -1,6 +1,9 @@
 default: all
+NODES := 3
 
-all: init-cluster init-ingress init-load-balancer init-dashboard
+all: init-cluster init-ingress init-load-balancer init-dashboard init-metrics
+min: NODES=1
+min: init-cluster init-ingress init-load-balancer init-dashboard init-metrics
 
 install:
 	 @cat Readme.md
@@ -16,6 +19,9 @@ init-dashboard:
 
 init-ingress:
 	 @./init-ingress.sh
+
+init-metrics:
+	@./init-metric-server.sh
 
 delete:
 	 @kind delete cluster

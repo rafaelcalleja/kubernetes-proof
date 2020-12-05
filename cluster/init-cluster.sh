@@ -5,6 +5,14 @@ source ../bash/require-command.bash
 commands=("docker" "kind")
 requireCommand "${commands[@]}"
 
+NODES=${NODES:-1}
+WORKERS=""
+
+for (( i = 1; i < $NODES; i++ ))
+do
+   WORKERS+=$'- role: worker\n'
+done
+
 if kind get clusters |grep kind > /dev/null; then
     echo "Cluster already initiated"
     exit 0
@@ -38,6 +46,5 @@ nodes:
     protocol: TCP
   - containerPort: 30080
     hostPort: 7070
-- role: worker
-- role: worker
+$WORKERS
 EOF
