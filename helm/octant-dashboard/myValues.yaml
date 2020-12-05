@@ -1,0 +1,19 @@
+keycloakGatekeeper:
+  enabled: true
+  url: http://172.18.255.1/auth/realms/master
+  clientId: octant
+  clientSecret: aec448af-7d7d-4e5f-a375-f6e12801a74e
+  proxyPort: 4999
+
+service:
+  type: LoadBalancer
+
+clusterRole:
+  additionalRules:
+    - apiGroups:
+        - "*"
+      resources: ["*"]
+      verbs:
+        - get
+        - list
+        - watch
