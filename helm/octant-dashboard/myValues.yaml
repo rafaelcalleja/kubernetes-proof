@@ -1,12 +1,26 @@
 keycloakGatekeeper:
   enabled: true
-  url: http://172.18.255.1/auth/realms/master
+  url: http://172.18.255.1/auth/realms/dokify
   clientId: octant
-  clientSecret: aec448af-7d7d-4e5f-a375-f6e12801a74e
+  clientSecret: 2005a3e2-3d6e-4d4c-8082-d3ef3c01b7c7
   proxyPort: 4999
+
+plugins:
+  install:
+    - https://github.com/rafaelcalleja/octant-jx/releases/download/v0.0.35.1/v0.0.35.02.tar.gz
 
 service:
   type: LoadBalancer
+
+ingress:
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  hosts:
+    - host: octant.localhost.int
+      paths:
+        - /
+  tls: []
 
 clusterRole:
   additionalRules:
